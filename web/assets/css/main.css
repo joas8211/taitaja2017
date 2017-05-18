@@ -223,7 +223,7 @@ body {
     text-align: center;
 }
 
-.container:not(.footer) {
+.container {
     background-color: white;
     max-width: 1200px;
     min-height: 100vh;
@@ -295,14 +295,13 @@ input {
 }
 
 .footer {
+    width: 100%;
     background-color: #ececec;
     padding: 20px;
-    max-width: 1200px;
 }
 
 .taitaja-logo {
     width: 80%;
     margin: auto;
     display: block;
-    max-width: 400px;
 }
