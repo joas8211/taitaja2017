@@ -293,15 +293,3 @@ input {
 .container.result {
     padding-bottom: 40vh;
 }
-
-.footer {
-    width: 100%;
-    background-color: #ececec;
-    padding: 20px;
-}
-
-.taitaja-logo {
-    width: 80%;
-    margin: auto;
-    display: block;
-}
