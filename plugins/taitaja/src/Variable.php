@@ -4,15 +4,42 @@ namespace joas\taitaja;
 use Craft;
 
 class Variable {
-    public function test() {
+    
+    public function getDatabaseCredentials() {
+        $dbhost = '';
+        $dbusername = '';
+        $dbpassword = '';
+        $dbname = '';
         
-        return "";
+        foreach ($_SERVER as $key => $value) {
+            if (strpos($key, "MYSQLCONNSTR_localdb") !== 0) {
+                continue;
+            }
+            
+            $dbhost = preg_replace("/^.*Data Source=(.+?);.*$/", "\\1", $value);
+            $dbusername = preg_replace("/^.*User Id=(.+?);.*$/", "\\1", $value);
+            $dbpassword = preg_replace("/^.*Password=(.+?)$/", "\\1", $value);
+            $dbname = "taitaja";
+        }
+
+        if (empty($dbhost)) $dbhost = getenv('DB_SERVER');
+        if (empty($dbusername)) $dbusername = getenv('DB_USER');
+        if (empty($dbpassword)) $dbpassword = getenv('DB_PASSWORD');
+        if (empty($dbname)) $dbname = getenv('DB_DATABASE');
+        
+        return (object) [
+            "host" => $dbhost,
+            "username" => $dbusername,
+            "password" => $dbpassword,
+            "database" => $dbname
+        ];
     }
 
     public function login($username, $password) {
         if (!empty($password) && !empty($username)) {
-            $sql = mysqli_connect("localhost", Craft::$app->db->username, Craft::$app->db->password);
-            $sql->select_db(Craft::$app->db->username);
+            $conf = $this->getDatabaseCredentials();
+            $sql = mysqli_connect($conf->host, $conf->username, $conf->password);
+            $sql->select_db($conf->database);
             $sql->set_charset("utf8");
             $username_escaped = $sql->real_escape_string($username);
             $result = $sql->query("SELECT password FROM t_users WHERE username='$username_escaped';");
@@ -38,8 +65,9 @@ class Variable {
 
     public function user() {
         if ($this->loggedIn()) {
-            $sql = mysqli_connect("localhost", Craft::$app->db->username, Craft::$app->db->password);
-            $sql->select_db(Craft::$app->db->username);
+            $conf = $this->getDatabaseCredentials();
+            $sql = mysqli_connect($conf->host, $conf->username, $conf->password);
+            $sql->select_db($conf->database);
             $sql->set_charset("utf8");
             $username_escaped = $sql->real_escape_string($_SESSION["user"]);
             $result = $sql->query("SELECT * FROM t_users WHERE username='$username_escaped';");
@@ -51,8 +79,9 @@ class Variable {
 
     public function sports($group = 0) {
         $group = intval($group);
-        $sql = mysqli_connect("localhost", Craft::$app->db->username, Craft::$app->db->password);
-        $sql->select_db(Craft::$app->db->username);
+        $conf = $this->getDatabaseCredentials();
+        $sql = mysqli_connect($conf->host, $conf->username, $conf->password);
+        $sql->select_db($conf->database);
         $sql->set_charset("utf8");
         $result = $sql->query("SELECT * FROM t_sports".($group > 0 ? " WHERE sportgroup='$group'" : "").";");
         $sports = [];
@@ -115,8 +144,9 @@ class Variable {
     public function saveEntries($entriesJSON) {
         $entries = json_decode($entriesJSON);
         $userid = $this->user()["id"];
-        $sql = mysqli_connect("localhost", Craft::$app->db->username, Craft::$app->db->password);
-        $sql->select_db(Craft::$app->db->username);
+        $conf = $this->getDatabaseCredentials();
+        $sql = mysqli_connect($conf->host, $conf->username, $conf->password);
+        $sql->select_db($conf->database);
         $sql->set_charset("utf8");
         $success = true;
         $sports = $this->sports();
@@ -134,8 +164,9 @@ class Variable {
     }
 
     public function latestEntries() {
-        $sql = mysqli_connect("localhost", Craft::$app->db->username, Craft::$app->db->password);
-        $sql->select_db(Craft::$app->db->username);
+        $conf = $this->getDatabaseCredentials();
+        $sql = mysqli_connect($conf->host, $conf->username, $conf->password);
+        $sql->select_db($conf->database);
         $sql->set_charset("utf8");
         $userid = $this->user()["id"];
         $sports = $this->sports();
@@ -153,8 +184,9 @@ class Variable {
     }
 
     public function entries() {
-        $sql = mysqli_connect("localhost", Craft::$app->db->username, Craft::$app->db->password);
-        $sql->select_db(Craft::$app->db->username);
+        $conf = $this->getDatabaseCredentials();
+        $sql = mysqli_connect($conf->host, $conf->username, $conf->password);
+        $sql->select_db($conf->database);
         $sql->set_charset("utf8");
         $userid = $this->user()["id"];
         $result = $sql->query("SELECT t_entries.input as input, t_entries.timestamp as timestamp, t_sports.title as sport, t_sports.sportgroup as sportgroup FROM t_entries INNER JOIN t_sports ON t_sports.id = t_entries.sport WHERE t_entries.user='$userid' ORDER BY t_entries.timestamp DESC");

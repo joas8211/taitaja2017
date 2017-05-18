@@ -6,12 +6,33 @@
  * list of the available settings in vendor/craftcms/cms/src/config/DbConfig.php.
  */
 
+$dbhost = '';
+$dbusername = '';
+$dbpassword = '';
+$dbname = '';
+
+foreach ($_SERVER as $key => $value) {
+    if (strpos($key, "MYSQLCONNSTR_localdb") !== 0) {
+        continue;
+    }
+    
+    $dbhost = preg_replace("/^.*Data Source=(.+?);.*$/", "\\1", $value);
+    $dbusername = preg_replace("/^.*User Id=(.+?);.*$/", "\\1", $value);
+    $dbpassword = preg_replace("/^.*Password=(.+?)$/", "\\1", $value);
+    $dbname = "taitaja";
+}
+
+if (empty($dbhost)) $dbhost = getenv('DB_SERVER');
+if (empty($dbusername)) $dbusername = getenv('DB_USER');
+if (empty($dbpassword)) $dbpassword = getenv('DB_PASSWORD');
+if (empty($dbname)) $dbname = getenv('DB_DATABASE');
+
 return [
-    'driver' => getenv('DB_DRIVER'),
-    'server' => getenv('DB_SERVER'),
-    'user' => getenv('DB_USER'),
-    'password' => getenv('DB_PASSWORD'),
-    'database' => getenv('DB_DATABASE'),
-    'schema' => getenv('DB_SCHEMA'),
-    'tablePrefix' => getenv('DB_TABLE_PREFIX'),
+    'driver' => "mysql",
+    'server' => $dbhost,
+    'user' => $dbusername,
+    'password' => $dbpassword,
+    'database' => $dbname,
+    'schema' => "public",
+    'tablePrefix' => ""
 ];
