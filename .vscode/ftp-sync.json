@@ -1,0 +1,31 @@
+{
+    "remotePath": "./craft",
+    "host": "live",
+    "username": "T2017051009",
+    "password": "taitaja19403218211",
+    "port": 22,
+    "secure": true,
+    "protocol": "sftp",
+    "uploadOnSave": true,
+    "passive": true,
+    "debug": false,
+    "privateKeyPath": null,
+    "passphrase": null,
+    "ignore": [
+        "\\.vscode",
+        "\\.git",
+        "\\.history",
+        "\\storage",
+        "\\vendor",
+        "\\.env",
+        "\\web\\cpresources",
+        "\\craft",
+        "\\craft.bat",
+        "\\web\\.htaccess"
+    ],
+    "generatedFiles": {
+        "uploadOnSave": false,
+        "extensionsToInclude": [],
+        "path": ""
+    }
+}

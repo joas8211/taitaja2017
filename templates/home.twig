@@ -1,0 +1,28 @@
+{% extends 'default' %}
+
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="container">
+        {{ craft.taitaja.test }}
+        <div class="row images">
+            <img class="full-width-image" src="{{ siteUrl }}assets/images/stock-running.jpg" alt="">
+            <img class="full-width-image" src="{{ siteUrl }}assets/images/yleisurheilu-logo.jpg" alt="">
+        </div>
+        <div class="row">
+            <div class="col-xs-7">
+                <p class="promote">Haluatko tietää miten hyvä olet yleisurheilussa?</p>
+                <a class="btn btn-custom" id="calculate" href="{{ craft.entries.section('form').one().url }}">Laske tasosi</a>
+            </div>
+            <img class="col-xs-5" src="{{ siteUrl }}assets/images/pylvaat.png" alt="">
+        </div>
+        <div class="row">
+            <p class="col-xs-12">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus lacinia tristique faucibus. Cras sit amet ullamcorper lorem. Nulla vel dui at est rutrum tempor. Sed magna quam, aliquam eu elit ac, congue vulputate nunc. Praesent sagittis, orci vel rhoncus posuere, nulla est facilisis nulla, a volutpat leo diam sodales turpis. Quisque in quam iaculis, rhoncus metus non, efficitur odio. Sed id enim quis ligula molestie porttitor. Mauris interdum erat ac magna iaculis, eu ornare lacus rutrum. Suspendisse porttitor vehicula placerat. Duis tristique est sed augue sagittis, in tincidunt est laoreet. Donec ultrices nec ipsum vel hendrerit. Integer vel lectus malesuada, pellentesque enim et, sagittis erat. Proin convallis ac mi vitae condimentum. Aenean diam augue, laoreet in neque quis, lacinia commodo ante. Maecenas purus quam, laoreet vel nisl ac, scelerisque varius ligula.
+            </p>
+        </div>
+    </div>
+{% endblock %}

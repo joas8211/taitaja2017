@@ -1,0 +1,61 @@
+{% if craft.app.request.isAjax %}
+{% block ajax %}{% endblock %}
+{% else %}
+<!doctype html>
+<html>
+    <head>
+        <title>{{ entry.title }}</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% block head %}
+            {%
+                set scripts = [
+                    siteUrl~'/assets/js/jquery.min.js',
+                    siteUrl~'/assets/js/bootstrap.min.js',
+                    siteUrl~'/assets/js/main.js'
+                ]
+            %}
+            {%
+                set styles = [
+                    'https://fonts.googleapis.com/css?family=Roboto',
+                    siteUrl~'/assets/css/bootstrap.min.css',
+                    siteUrl~'/assets/css/bootstrap-theme.min.css',
+                    siteUrl~'/assets/css/font-awesome.min.css',
+                    siteUrl~'/assets/css/main.css'
+                ]
+            %}
+            {% for file in styles %}
+                <link rel="stylesheet" href="{{ file }}">
+            {% endfor %}
+            {% for file in scripts %}
+                <script type="text/javascript" src="{{ file }}"></script>
+            {% endfor %}
+        {% endblock %}
+    </head>
+    <body>
+        {% block body %}
+            <div class="topbar">
+                <i class="fa fa-bars menu-icon col-xs-1" id="menu-icon"></i>
+                <div class="logo-wrapper col-xs-11">
+                    <img class="logo" src="{{ siteUrl }}assets/images/SUL_logo_vaaka.png" alt="">
+                </div>
+            </div>
+            <div class="menu">
+                {% if (craft.taitaja.loggedIn) %}
+                    {% set items = ['home', {title: 'Aloita harrastus', url: 'http://www.yleisurheilu.fi/lapset-ja-nuoret'}, 'form', 'profile', 'history', 'logout'] %}
+                {% else %}
+                    {% set items = ['home', {title: 'Aloita harrastus', url: 'http://www.yleisurheilu.fi/lapset-ja-nuoret'}, 'login'] %}
+                {% endif %}
+                {% for item in items %}
+                    {% if item is iterable %}
+                        <div class="item"><a href="{{ item.url }}">{{ item.title }}</a></div>
+                    {% else %}
+                        {% set entry = craft.entries.section(item).one() %}
+                        <div class="item"><a href="{{ entry.url }}">{{ entry.title }}</a></div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endblock %}
+    </body>
+</html>
+{% endif %}

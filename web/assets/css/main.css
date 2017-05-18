@@ -1,0 +1,295 @@
+body {
+    font-family: roboto;
+    background-color: black;
+}
+
+.topbar {
+    background-color: black;
+    height: 50px;
+}
+
+.topbar .menu-icon {
+    color: white;
+    line-height: 50px;
+    font-size: 20px;
+}
+
+.topbar .logo-wrapper {
+    height: 50px;
+}
+
+.topbar .logo-wrapper .logo {
+    height: 45px;
+    margin: 2.5px auto;
+    display: block;
+}
+
+.full-width-image {
+    max-width: 100%;
+    display: block;
+    margin: auto;
+}
+
+.btn-custom {
+    background-color: #008FCB;
+    border-radius: 5px;
+    border: solid 1px #006E9C;
+    padding: 10px 30px;
+    font-size: 20px;
+    color: black;
+}
+
+.promote {
+    text-align: center;
+    font-size: 20px;
+}
+
+.btn#calculate {
+    margin: 50px auto 0 auto;
+    display: block;
+}
+
+.row {
+    margin-top: 20px;
+}
+
+.menu {
+    background-color: black;
+    max-height: 0;
+    position: absolute;
+    z-index: 1;
+    top: 50px;
+    left: 0;
+    right: 0;
+    transition: max-height 0.55s ease-out;
+    overflow: hidden;
+}
+
+.menu.open {
+    max-height: 100vh;
+    overflow: auto;
+    transition: max-height 0.75s ease-in;
+}
+
+.menu .item {
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.menu .item a {
+    font-size: 30px;
+    text-decoration: none;
+    color: #d4d4d4;
+}
+
+.sport {
+    align-items: center;
+}
+
+.sport .name {
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.sport .image {
+    max-width: 30%; 
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+.sport .image img {
+    width: 100%;
+}
+
+.sport .field {
+    text-align: center;
+}
+
+.submit-big {
+    width: 100%;
+    margin: 30px 0;
+}
+
+.result {
+    position: relative;
+    text-align: center;
+}
+
+.result .star {
+    font-size: 300px;
+    position: relative;
+    color: #89C53F;
+}
+
+.result .title {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 40px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.result .num {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 70px;
+}
+
+.profile .image-wrapper {
+    position: relative;
+    width: 250px;
+    margin: auto;
+}
+
+.result-small {
+    position: absolute;
+    text-align: center;
+    width: 120px;
+    bottom: 0;
+    right: 0;
+}
+
+.result-small .star {
+    font-size: 100px;
+    position: relative;
+    color: #89C53F;
+}
+
+.result-small .num {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 25px;
+}
+
+.cheer {
+    text-align: center;
+    font-size: 25px;
+}
+
+.diagram {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+}
+
+.diagram .pillar {
+    width: 20%;
+    background: linear-gradient(transparent 60px, rgb(0, 0, 0) 60px);
+}
+
+.diagram .pillar .image {
+    margin: auto;
+    display: block;
+    height: 50px;
+}
+
+.container.profile {
+    padding-bottom: 40vh;
+}
+
+.profile .profile-image {
+    width: 200px;
+    height: 200px;
+    margin: auto;
+    display: block;
+    border-radius: 80px;
+    margin-top: 50px;
+}
+
+.profile .name {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 30px;
+}
+
+.profile .stats {
+    margin-top: 30px;
+}
+
+.text-align {
+    text-align: center;
+}
+
+.container {
+    background-color: white;
+    max-width: 1200px;
+    min-height: 100vh;
+    position: relative;
+}
+
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}
+
+.images {
+    margin-top: 0;
+}
+
+input {
+    text-align: center;
+}
+
+.sport-table th {
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.sport-table-wrapper {
+    max-width: 500px;
+    margin: auto;
+}
+
+
+.sport-table td {
+    width: 60%;
+    padding-left: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+.sport-input-group {
+    display: flex;
+    width: 150px;
+    margin: auto;
+}
+
+.sport-table .unit {
+    margin: 0;
+    margin-left: 20px;
+    line-height: 34px;
+    font-size: 20px;
+}
+
+.sport-input {
+    width: 100px;
+}
+
+.history-table {
+    font-size: 20px;
+}
+
+.history-table td, .history-table th {
+    text-align: center;
+}
+
+.history-table tr {
+    border-bottom: solid 1px black;
+}
+
+.container.result {
+    padding-bottom: 40vh;
+}

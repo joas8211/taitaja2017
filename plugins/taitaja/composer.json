@@ -1,0 +1,22 @@
+{
+  "name": "joas/taitaja",
+  "description": "Plugin for providing basic functionality website created in Taitaja competition.",
+  "version": "1.0.0",
+  "type": "craft-plugin",
+  "minimum-stability": "dev",
+  "require": {
+    "craftcms/cms": "^3.0.0-alpha.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "joas\\taitaja\\": "src/"
+    }
+  },
+  "extra": {
+    "class": "joas\\taitaja\\Plugin",
+    "handle": "taitaja",
+    "name": "Taitaja",
+    "developer": "Jesse Sivonen",
+    "developerUrl": "http://joas.xyz/"
+  }
+}

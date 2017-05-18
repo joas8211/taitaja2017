@@ -1,0 +1,49 @@
+{% extends 'default' %}
+
+{% block head %}
+    {{ parent() }}
+    {% if not craft.taitaja.loggedIn %}
+        {% header("Location: "~craft.entries.id(18).one.url) %}
+        {% exit 303 %}
+    {% endif %}
+    <link rel="stylesheet" href="{{ siteUrl }}assets/css/chartist.min.css">
+    <script src="{{ siteUrl }}assets/js/chartist.min.js"></script>
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="container profile">
+        <div class="image-wrapper row">
+            <img class="profile-image" src="{{ siteUrl }}assets/images/cheetah.jpg" alt="">
+            <div class="result-small row">
+                <i class="fa fa-star star col-xs-12"></i>
+                <p class="num">{{ craft.taitaja.tier }}</p>
+            </div>
+        </div>
+        <p class="name row">{{ craft.taitaja.user["title"] }}</p>
+        <div class="diagram">
+            {% set pointsGroup = craft.taitaja.sportGroupPoints() %}
+            {% if pointsGroup|length == 4 %}
+                {% set max = 0 %}
+                {% set min = 1000 %}
+                {% for group in craft.categories.group('sports') %}
+                    {% set points = pointsGroup[group.id] %}
+                    {% if points > max %}
+                        {% set max = points %}
+                    {% endif %}
+                    {% if points < min %}
+                        {% set min = points %}
+                    {% endif %}
+                {% endfor %}
+                {% for group in craft.categories.group('sports') %}
+                    {% set points = pointsGroup[group.id] %}
+                    {% set color = points == max ? '#89C53F' : points == min ? '#C20916' : '#EE7F00' %}
+                    {% set points = points * 100 / max %}
+                    <div class="pillar" style="height: {{ points }}%; background: linear-gradient(transparent 60px, {{ color }} 60px);">
+                        <img class="image" src="{{ group.smallImage.one.url }}" alt="{{ group.title }}">
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

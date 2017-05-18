@@ -1,0 +1,61 @@
+{% extends 'default' %}
+
+{% block ajax %}
+    {% header "Content-Type: application/json" %}
+    {
+        "success": {{ craft.taitaja.saveEntries(craft.app.request.getParam("inputs")) }},
+        "redirect": "{{ siteUrl }}tulos"
+    }
+{% endblock %}
+
+{% block head %}
+    {% if not craft.taitaja.loggedIn %}
+        {% header("Location: "~craft.entries.id(18).one.url) %}
+        {% exit 303 %}
+    {% endif %}
+    {{ parent() }}
+    <script src="{{ siteUrl }}assets/js/form.js"></script>
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    {% set entries = craft.taitaja.latestEntries %}
+    <div class="container">
+        <form id="form">
+            {{ csrfInput() }}
+            {% for sportgroup in craft.categories.group('sports') %}
+                <div class="row sport">
+                    <div class="name">
+                        <p>{{ sportgroup.title }}</p>
+                    </div>
+                    <div class="image">
+                        <img src="{{ sportgroup.largeImage.one.url }}" alt="{{ sportgroup.title }}">
+                    </div>
+                    <div class="sport-table-wrapper">
+                        <table class="sport-table col-xs-12"><tbody>
+                            {% set sports = craft.taitaja.sports(sportgroup.id) %}
+                                {% for sport in sports %}
+                                    <tr>
+                                        <th>{{ sport["title"] }}</th>
+                                        <td>
+                                            {% if sportgroup.inputtype == "time" %}
+                                                <div class="sport-input-group"><input class="form-control sport-input minutes" type="number" step="1"><p class="unit">min</p></div>
+                                                <div class="sport-input-group"><input class="form-control sport-input seconds" type="number" step="0.01"><p class="unit">s</p></div>
+                                                <input type="hidden" class="sport-value time-value" data-id="{{ sport["id"] }}"{{ entries[sport["id"]] is defined ? ' value='~entries[sport["id"]].input~'' : '' }}>
+                                            {% else %}
+                                                <div class="sport-input-group">
+                                                    <input class="form-control sport-input sport-value" type="number" step="{{ sportgroup.precision }}" data-id="{{ sport["id"] }}"{{ entries[sport["id"]] is defined ? ' value='~entries[sport["id"]].input~'' : '' }}>
+                                                    <p class="unit">{{ sportgroup["unit"] }}</p>
+                                                </div>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                        </tbody></table>
+                    </div>
+                </div>
+            {% endfor %}
+            <button class="btn btn-custom submit-big">Laske taso</button>
+        </form>
+    </div>
+{% endblock %}

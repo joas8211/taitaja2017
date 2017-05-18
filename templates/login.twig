@@ -1,0 +1,47 @@
+{% extends 'default' %}
+
+{% block ajax %}
+    {% header "Content-Type: application/json" %}
+    {% set username = craft.app.request.getParam("username") %}
+    {% set password = craft.app.request.getParam("password") %}
+    {% set success = craft.taitaja.login(username, password) %}
+    {% if success %}
+        {
+            "success": true,
+            "redirect": "{{ craft.entries.id(17).one.url }}"
+        }
+    {% else %}
+        {
+            "success": false
+        }
+    {% endif %}
+{% endblock %}
+
+{% block head %}
+    {{ parent() }}
+    <script src="{{ siteUrl }}assets/js/login.js"></script>
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <form id="login-form">
+                    {{ csrfInput() }}
+                    <div class="form-group">
+                        <label for="username">Käyttäjätunnus</label>
+                        <input type="text" class="form-control" id="username" name="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Salasana</label>
+                        <input type="password" class="form-control" id="password" name="password">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-custom">Kirjaudu sisään</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

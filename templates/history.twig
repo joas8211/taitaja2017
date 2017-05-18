@@ -1,0 +1,29 @@
+{% extends 'default' %}
+
+{% block body %}
+    {{ parent() }}
+    {% set entries = craft.taitaja.entries %}
+    <div class="container">
+        <table class="history-table col-xs-12"><tbody>
+            <tr>
+                <th>Päiväys</th>
+                <th>Laji</th>
+                <th>Suoritus</th>
+            </tr>
+            {% for entry in entries %}
+                {% set sportgroup = craft.categories.group('sports').id(entry["sportgroup"]).one %}
+                <tr>
+                    <td>{{ entry["timestamp"]|date("d.m.Y") }}</td>
+                    <td>{{ entry["sport"] }}</td>
+                    {% if (sportgroup.inputtype == "time") %}
+                        {% set minutes = (entry["input"] / 60)|round(0, 'floor') %}
+                        {% set seconds = entry["input"] - minutes * 60 %}
+                        <td>{{ minutes }}min {{ seconds }}s</td>
+                    {% else %}
+                        <td>{{ entry["input"] }} {{ sportgroup.unit }}</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody></table>
+    </div>
+{% endblock %}
