@@ -8,7 +8,7 @@
 
 return [
     // Base site URL
-    'siteUrl' => "http://cosmo.kpedu.fi/~T2017051009",
+    'siteUrl' => getenv("BASE_URL"),
 
     // Default Week Start Day (0 = Sunday, 1 = Monday...)
     'defaultWeekStartDay' => 0,
@@ -23,5 +23,5 @@ return [
     'cpTrigger' => 'admin',
 
     // Dev Mode (see https://craftcms.com/support/dev-mode)
-    'devMode' => true,
+    'devMode' => false,
 ];
